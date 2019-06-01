@@ -1,42 +1,64 @@
-<?php 
-class Usuarios_Model extends CI_Model {
+<?php
+class Usuarios_model extends CI_Model
+{
 
-    var $title   = '';
-    var $content = '';
-    var $date    = '';
 
     function __construct()
     {
         // Call the Model constructor
         parent::__construct();
+        // $this->load->model('Usuarios_Model');
     }
-    
-    function get_last_ten_entries()
+
+
+    public function Agregar_Usuario($Datos)
     {
-        $query = $this->db->get('entries', 10);
+        $this->db->insert('usuarios', $Datos);
+    }
+
+    public function Modificar_Usuario($Datos1, $Datos)
+    {
+        $this->db->update('usuarios', $Datos, array('Id' => $Datos1["Id"]));
+        return true;
+    }
+
+    public function Eliminar_Usuario($Datos1, $Datos)
+    {
+        $this->db->delete('usuarios', array('Id' => $Datos1["Id"]));
+        return true;
+        //$this->db->where(array('Id'=>$Datos1["Id"]));
+    }
+
+    public function Listado()
+    {
+        $Query = $this->db->get('usuarios');
+        return  $Query->result_array();
+    }
+
+    public function Filtro($Id = "", $Nombres = "", $Apellidos = "", $Telefono = "", $Correo = "")
+    {
+        if ($Id != "") {
+            $Filtrar = $this->db->get_where('usuarios', array('Id' => $Id));
+        } elseif ($Nombres != "") {
+            $Filtrar = $this->db->get_where('usuarios', array('Nombres' => $Nombres));
+        } elseif ($Apellidos != "") {
+            $Filtrar = $this->db->get_where('usuarios', array('Apellidos' => $Apellidos));
+        } elseif ($Telefono != "") {
+            $Filtrar = $this->db->get_where('usuarios', array('Telefono' => $Telefono));
+        } elseif ($Correo != "") {
+            $Filtrar = $this->db->get_where('usuarios', array('Correo' => $Correo));
+        }
+        return $Filtrar->result_array();
+    }
+
+
+    /*
+    function Mostrar_Id($Id){
+        $this->db->where("Id",$Id);
+        $query=$this->db->get("formulario");
         return $query->result();
-    }
-    function Agregar_Usuario($Datos){
-        $this->db->create($Datos);
+
     }
 
-    function insert_entry()
-    {
-        $this->title   = $_POST['title']; // please read the below note
-        $this->content = $_POST['content'];
-        $this->date    = time();
-
-        $this->db->insert('entries', $this);
-    }
-
-    function update_entry()
-    {
-        $this->title   = $_POST['title'];
-        $this->content = $_POST['content'];
-        $this->date    = time();
-
-        $this->db->update('entries', $this, array('id' => $_POST['id']));
-    }
-
+*/
 }
-?>
