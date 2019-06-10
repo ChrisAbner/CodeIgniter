@@ -1,22 +1,37 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="http://localhost/CodeIgniter/assets/CSS/InicioSesion.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+<?php
+session_start();
+$hora = date('H:i');
+$session_id = session_id();
+$Token = hash('sha1', $hora.$session_id);
+ 
+$_SESSION['Token'] = $Token;
+ 
+//echo $_SESSION['token'];
+?>
+
+<!DOCTYPE html>
+<html>
 <head>
   <nav class="navbar navbar-dark navbar-expand-lg bg-primary">
-    <a class="navbar-brand" href="http://localhost/CodeIgniter/index.php/Usuarios/Login">Formulario</a>
+    <a class="navbar-brand" href="http://localhost/CodeIgniter/index.php/Usuarios/login">Formulario</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item ">
-          <a class="nav-link" href="http://localhost/CodeIgniter/index.php/Usuarios/index">Agregar <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="http://localhost/CodeIgniter/index.php/Usuarios/Direccion" hidden>Agregar <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link" href="http://localhost/CodeIgniter/index.php/Usuarios/Editar">Editar</a>
+          <a class="nav-link" href="http://localhost/CodeIgniter/index.php/Usuarios/Editar" hidden>Editar</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="http://localhost/CodeIgniter/index.php/Usuarios/Listado">Listado</a>
+          <a class="nav-link" href="http://localhost/CodeIgniter/index.php/Usuarios/Listado" hidden>Listado</a>
         </li>
 
       </ul>
@@ -24,8 +39,8 @@
   </nav>
   <title>Formulario</title>
 </head>
-
-<div class="container login-container ">
+<h4 style="text-align: center"> Iniciar sesión</h4>
+<div class="container login-container animated fadeInLeft">
             <div class="row">
                 <div class="col-md-6 login-form-1">
                     <h3>Registro</h3>
@@ -45,16 +60,17 @@
                 </div>
                 <div class="col-md-6 login-form-2 bg-primary">
                     <h3>Inicio de sesión</h3>
-                    <form action="" method="POST">
+                    <form action="login" method="POST">
                         <div class="form-group">
-                            <input name="CORREO" type="email" class="form-control" placeholder="Correo electronico" value="" />
+                            <input name="Usuario" type="text" class="form-control" placeholder="Usuario" value="" />
                         </div>
                         <div class="form-group">
-                            <input name="CONTRASENA" type="password" class="form-control" placeholder="Contraseña" value="" />
+                            <input name="Contrasena" type="password" class="form-control" placeholder="Contraseña" value="" />
                         </div>
                         <center>
                             <div class="form-group">
-                                <input type="submit" class="btn btn-outline-light" value="Iniciar" />
+                            <button type="submit" class="btn btn-outline-light">Iniciar</button>
+                            <input type="text" name="Token" value="<?= $Token ?>"> </input>
                             </div>
                             <div class="form-group">
 
@@ -65,3 +81,7 @@
                 </div>
             </div>
         </div>
+        
+
+</body>
+</html>

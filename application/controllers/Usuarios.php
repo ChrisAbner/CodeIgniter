@@ -18,10 +18,20 @@ class Usuarios extends CI_Controller
 	 * map to /index.php/welcome/<method_name>
 	 * @see http://codeigniter.com/user_guide/general/urls.html
 	 */
+	public function __construct()
+	{
+		parent::__construct();
+
+
+		$this->load->model("Usuarios_model");
+	}
 	public function index()
 	{
-		//	$this->get_value();
-		$this->load->view('Direccion');
+		if ($this->session->userdata("login")) {
+			redirect('http://localhost/CodeIgniter/index.php/Dashboard');
+		} else {
+			$this->load->view("login");
+		}
 	}
 
 	public function Editar()
@@ -29,31 +39,87 @@ class Usuarios extends CI_Controller
 		$this->load->view('Editar');
 		if ($this->input->get('Editar')) { }
 	}
-	public function Login()
+	public function Direccion()
 	{
-		$this->load->view('Login');
-		if ($this->input->get('Login')) { }
+		$this->load->view('Direccion');
+		if ($this->input->get('Direccion')) { }
 	}
+	public function login()
+	{
+		$this->load->view('login');
+		$this->load->model('Usuarios_model');
+
+		$username = $this->input->post("Usuario");
+		$password = $this->input->post("Contrasena");
+		$res = $this->Usuarios_model->login($username, sha1($password));
+
+		if (!$res) {
+			$this->session->set_flashdata("error", "El usuario y/o contraseña son incorrectos");
+		} else {
+			$data  = array(
+				'Id' => $res->Id,
+				'Nombres' => $res->Nombres,
+				'login' => TRUE
+			);
+
+			$this->session->set_userdata($data);
+			$hora = date('H:i');
+			$session_id = session_id();
+			$Token = hash('sha1', $hora . $session_id);
+
+			$_SESSION['Token'] = $Token;
+			$Usuario = $this->input->post('Usuario');
+			$Token = $this->input->post('Token');
+			//$Token = $this->input->post($_SESSION['Token']);
+
+			$Datos = array(
+				'Token' => $Token,
+			);
+			$where = array(
+				'Usuario' => $Usuario,
+				
+				//'Token' => $Token,
+			);
+
+			$this->Usuarios_model->Token($Datos , $where);
+			redirect('http://localhost/CodeIgniter/index.php/Usuarios/Direccion');
+		}
+	}
+
+	public function logout()
+	{
+		$this->session->sess_destroy();
+		redirect('http://localhost/CodeIgniter/index.php/Usuarios/login');
+	}
+
+
 
 
 	public function Guardar_Usuario()
 	{
 		$this->load->model('Usuarios_model');
+		//$this->load->library('encryption');
 		$Nombres = $this->input->post('Nombres');
 		$Apellidos = $this->input->post('Apellidos');
 		$Telefono = $this->input->post('Telefono');
+		$Usuario = $this->input->post('Usuario');
 		$Correo = $this->input->post('Correo');
+		//$Contrasena = $this->encrypt->decode('Contrasena');
+		$Contrasena = $this->input->post('Contrasena');
+
 
 		$Datos = array(
 			'Nombres' => $Nombres,
 			'Apellidos' => $Apellidos,
 			'Correo' => $Correo,
 			'Telefono' => $Telefono,
+			'Usuario' => $Usuario,
+			'Contrasena' => $Contrasena,
 		);
 
 		$this->Usuarios_model->Agregar_Usuario($Datos);
 		$this->load->helper('url');
-			redirect('http://localhost/CodeIgniter/index.php/Usuarios/Listado');	
+		redirect('http://localhost/CodeIgniter/index.php/Usuarios/Listado');
 	}
 
 	public function Modificar_Usuario()
@@ -97,7 +163,7 @@ class Usuarios extends CI_Controller
 		} else {
 			$this->Usuarios_model->Modificar_Usuario($Datos1, $Datos);
 			$this->load->helper('url');
-			redirect('http://localhost/CodeIgniter/index.php/Usuarios/Listado');	
+			redirect('http://localhost/CodeIgniter/index.php/Usuarios/Listado');
 		}
 	}
 
@@ -129,7 +195,7 @@ class Usuarios extends CI_Controller
 		);
 		$this->Usuarios_model->Eliminar_Usuario($Datos1, $Datos);
 		$this->load->helper('url');
-			redirect('http://localhost/CodeIgniter/index.php/Usuarios/Listado');
+		redirect('http://localhost/CodeIgniter/index.php/Usuarios/Listado');
 	}
 
 	public function Listado()

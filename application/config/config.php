@@ -22,7 +22,7 @@
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = '';
+$config['base_url'] = 'http://localhost/CodeIgniter/';
 
 /*
 |--------------------------------------------------------------------------
@@ -232,7 +232,7 @@ $config['cache_path'] = '';
 | MUST set an encryption key.  See the user guide for info.
 |
 */
-$config['encryption_key'] = '';
+$config['encryption_key'] = 'c368bff99b9d7d51cce61870a53a676d269a42d7';
 
 /*
 |--------------------------------------------------------------------------

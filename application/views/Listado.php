@@ -10,14 +10,14 @@
 
 <head>
   <nav class="navbar navbar-dark navbar-expand-lg bg-primary">
-    <a class="navbar-brand" href="http://localhost/CodeIgniter/index.php/Usuarios/Login">Formulario</a>
+    <a class="navbar-brand" href="http://localhost/CodeIgniter/index.php/Usuarios/login">Formulario</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item ">
-          <a class="nav-link" href="http://localhost/CodeIgniter/index.php/Usuarios/index">Agregar <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="http://localhost/CodeIgniter/index.php/Usuarios/Direccion">Agregar <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item ">
           <a class="nav-link" href="http://localhost/CodeIgniter/index.php/Usuarios/Editar">Editar</a>
@@ -28,6 +28,9 @@
 
       </ul>
     </div>
+    <form id="Form2" action="logout" class="form-inline my-2 my-lg-0">
+            <button class="btn btn-secondary my-2 my-sm-0" onClick="Cerrar()" type="button" >Cerrar sesión</button>
+          </form>
   </nav>
   <title>Formulario</title>
 </head>
@@ -80,48 +83,72 @@
         <td><?php echo $Usuarios['Correo'] ?></td>
         <form method="GET" action="Modificar_Usuario" enctype="multipart/form-data">
           <td>
-            <button class="btn btn-secondary"  type="submit">Editar</button>
-            <input type="text"  name="Editar" value="<?= $Usuarios['Id'] ?>" hidden> </input>
+            <button class="btn btn-secondary" type="submit">Editar</button>
+            <input type="text" name="Editar" value="<?= $Usuarios['Id'] ?>" hidden> </input>
           </td>
         </form>
-        <form method="POST" action="Eliminar_Usuario" enctype="multipart/form-data">
+
+        <form id="Form1" method="POST" action="Eliminar_Usuario" enctype="multipart/form-data">
           <td>
-            <button class="btn btn-danger" onClick="Editar();" type="button">Eliminar</button>
+          <input type="text" name="Eliminar" value="<?= $Usuarios['Id'] ?>" ></input>
+            <button class="btn btn-danger" name="Eliminar" onClick="Editar()" type="button">Eliminar</button>
           </td>
-          <input type="text" name="Eliminar" value="<?= $Usuarios['Id'] ?>" hidden></input>
         </form>
 
       </tr>
     <?php
   }
-  ?> 
-    <script type="text/javascript">
-
-    function Editar() {
-      swal({
-  title: "¿Esta seguro?",
-  text: "Los registros no se pueden recuperar",
-  icon: "warning",
-  buttons: true,
-  dangerMode: true,
-})
-.then((willDelete) => {
-  if (willDelete) {
-    swal("Se ha borrado el registro exitosamente", {
-      icon: "success",
-    }).then(function() {
-    window.location = "http://localhost/CodeIgniter/index.php/Usuarios/Listado";
-});
-  } else {
-    swal("No se ha borrado ningun registro");
-  }
-});
-    }
-  </script>
-  
+  ?>
   </table>
   </form>
   </div>
 </body>
 
 </html>
+<script type="text/javascript">
+      function Editar() {
+        swal({
+            title: "¿Esta seguro?",
+            text: "Los registros no se pueden recuperar",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+              swal("Se ha borrado el registro exitosamente", {
+                icon: "success",
+              }).then(function() {
+                window.location = "http://localhost/CodeIgniter/index.php/Usuarios/Listado";
+                $("#Form1").submit();
+              });
+            } else {
+              swal("No se ha borrado ningun registro");
+
+            }
+          });
+      }
+    </script>
+    <script type="text/javascript">
+      function Cerrar() {
+        swal({
+            title: "¿Esta seguro?",
+            text: "Recuerde memorizar su contraseña",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+              swal("Hasta pronto", {
+                icon: "success",
+              }).then(function() {
+                $("#Form2").submit();
+              });
+            } else {
+              swal("Se ha cancelado la operacion");
+
+            }
+          });
+      }
+    </script>
