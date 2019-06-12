@@ -3,6 +3,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<link rel="stylesheet" href="cookiealert.css">
+<script src="cookiealert-standalone.js"></script>
 
 <?
 session_start();
@@ -15,24 +17,30 @@ if($_SESSION['token'] == $token){
     echo "Has intentado acceder sin cumplir con el token";
 }
 ?>
+<?php 
+if (!$this->session->userdata("login")) {
+  redirect('http://192.168.50.27/CodeIgniter/index.php/Usuarios/login');
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <nav class="navbar navbar-dark navbar-expand-lg bg-primary">
-    <a class="navbar-brand" href="http://localhost/CodeIgniter/index.php/Usuarios/login">Formulario</a>
+    <a class="navbar-brand" href="http://192.168.50.27/CodeIgniter/index.php/Usuarios/login">Formulario</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item active">
-          <a class="nav-link" href="http://localhost/CodeIgniter/index.php/Usuarios/Direccion">Agregar <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="http://192.168.50.27/CodeIgniter/index.php/Usuarios/Direccion">Agregar <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link" href="http://localhost/CodeIgniter/index.php/Usuarios/Editar">Editar</a>
+          <a class="nav-link" href="http://192.168.50.27/CodeIgniter/index.php/Usuarios/Editar">Editar</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="http://localhost/CodeIgniter/index.php/Usuarios/Listado">Listado</a>
+          <a class="nav-link" href="http://192.168.50.27/CodeIgniter/index.php/Usuarios/Listado">Listado</a>
         </li>
 
       </ul>
@@ -44,9 +52,10 @@ if($_SESSION['token'] == $token){
   </nav>
   <title>Formulario</title>
 </head>
-
+<?php 
+echo "Tu dirección IP es: {$_SERVER['REMOTE_ADDR']}";
+?>
 <body>
-
   <div class="container">
     <h4 style="text-align: center"> Añadir usuario</h4>
     <form action="Guardar_Usuario" method="POST" enctype="multipart/form-data">
@@ -71,16 +80,35 @@ if($_SESSION['token'] == $token){
 
       <div>
       </div>
+      
       <center>
         <button class=" btn btn-lg btn btn-success" type="submit">Confirmar</button>
       </center>
-
 
     </form>
   </div>
 </body>
 
 </html>
+<div class="alert alert-dismissible text-center cookiealert" role="alert">
+
+  <div class="cookiealert-container">
+
+      <b>Do you like cookies?</b> &#x1F36A; We use cookies to ensure you get the best experience on our website. <a href="http://cookiesandyou.com/" target="_blank">Learn more</a>
+
+ 
+
+      <button type="button" class="btn btn-primary btn-sm acceptcookies" aria-label="Close">
+
+          I agree
+
+      </button>
+
+  </div>
+
+</div>
+
+
 <script type="text/javascript">
       function Cerrar() {
         swal({

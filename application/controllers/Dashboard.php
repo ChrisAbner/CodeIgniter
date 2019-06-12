@@ -7,7 +7,7 @@ class Dashboard extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		if (!$this->session->userdata("login")) {
-			redirect('http://localhost/CodeIgniter/index.php/Usuarios/login');
+			redirect('http://192.168.50.27/CodeIgniter/index.php/Usuarios/login');
 		}
 	}
 	public function index()

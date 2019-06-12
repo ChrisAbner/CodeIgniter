@@ -32,8 +32,10 @@ class Usuarios_model extends CI_Model
     {
         print_r($Datos);
         print_R($where);
-        $this->db->update('usuarios',$Datos, "Usuario =". $where['Usuario']);
+        //$this->db->update('usuarios',$Datos, "Usuario =". $where['Usuario']);
         //$this->db->update('usuarios', $Datos, array('Id' => $Datos1["Id"]));
+        $this->db->update('usuarios', $Datos, array('Usuario' => $where["Usuario"]));
+        
         return true;
     }
 

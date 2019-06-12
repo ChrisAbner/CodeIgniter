@@ -4,6 +4,11 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+<?php 
+if (!$this->session->userdata("login")) {
+  redirect('http://192.168.50.27/CodeIgniter/index.php/Usuarios/login');
+}
+?>
 
 <?php
 if (empty($Usuarios)) {
@@ -19,20 +24,20 @@ if (empty($Usuarios)) {
 
 <head>
   <nav class="navbar navbar-dark navbar-expand-lg bg-primary">
-    <a class="navbar-brand" href="http://localhost/CodeIgniter/index.php/Usuarios/login">Formulario</a>
+    <a class="navbar-brand" href="http://192.168.50.27/CodeIgniter/index.php/Usuarios/login">Formulario</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item ">
-          <a class="nav-link" href="http://localhost/CodeIgniter/index.php/Usuarios/Direccion">Agregar <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="http://192.168.50.27/CodeIgniter/index.php/Usuarios/Direccion">Agregar <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="http://localhost/CodeIgniter/index.php/Usuarios/Editar">Editar</a>
+          <a class="nav-link" href="http://192.168.50.27/CodeIgniter/index.php/Usuarios/Editar">Editar</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="http://localhost/CodeIgniter/index.php/Usuarios/Listado">Listado</a>
+          <a class="nav-link" href="http://192.168.50.27/CodeIgniter/index.php/Usuarios/Listado">Listado</a>
         </li>
 
       </ul>
@@ -86,7 +91,7 @@ if (empty($Usuarios)) {
         icon: "success",
         button: "Continuar",
       }).then(function() {
-    window.location = "http://localhost/CodeIgniter/index.php/Usuarios/Listado";
+    window.location = "http://192.168.50.27/CodeIgniter/index.php/Usuarios/Listado";
     $("#Form2").submit()
     }   
 });

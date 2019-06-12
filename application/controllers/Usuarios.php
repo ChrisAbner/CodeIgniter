@@ -28,12 +28,12 @@ class Usuarios extends CI_Controller
 	public function index()
 	{
 		if ($this->session->userdata("login")) {
-			redirect('http://localhost/CodeIgniter/index.php/Dashboard');
+			redirect('http://192.168.50.27/CodeIgniter/index.php/Dashboard');
 		} else {
 			$this->load->view("login");
 		}
 	}
-
+	
 	public function Editar()
 	{
 		$this->load->view('Editar');
@@ -48,6 +48,7 @@ class Usuarios extends CI_Controller
 	{
 		$this->load->view('login');
 		$this->load->model('Usuarios_model');
+		
 
 		$username = $this->input->post("Usuario");
 		$password = $this->input->post("Contrasena");
@@ -72,24 +73,59 @@ class Usuarios extends CI_Controller
 			$Token = $this->input->post('Token');
 			//$Token = $this->input->post($_SESSION['Token']);
 
+			$this->load->helper('cookie');
+
+        $name   = 'Auth_Token';
+        $value  = $Token;
+        $expire = time()+1000;
+        $path  = '/';
+		$secure = TRUE;
+		setcookie($name,$value,$expire,$path); 
+
+	
+
+$_SESSION['ip'] = $_SERVER['REMOTE_ADDR'];
+
+$_SESSION['Usuario'] = $_POST['Usuario'];
+
+$_SESSION['ip'] = sha1(time() . rand() . $_SERVER['SERVER_NAME']);
+setcookie('token', $_SESSION['ip']);
+
+
+
+		echo get_cookie($Token);
+		 
 			$Datos = array(
 				'Token' => $Token,
 			);
 			$where = array(
 				'Usuario' => $Usuario,
-				
+
 				//'Token' => $Token,
 			);
 
-			$this->Usuarios_model->Token($Datos , $where);
-			redirect('http://localhost/CodeIgniter/index.php/Usuarios/Direccion');
+			$this->Usuarios_model->Token($Datos, $where);
+			redirect('http://192.168.50.27/CodeIgniter/index.php/Usuarios/Direccion');
 		}
 	}
 
 	public function logout()
 	{
 		$this->session->sess_destroy();
-		redirect('http://localhost/CodeIgniter/index.php/Usuarios/login');
+		redirect('http://192.168.50.27/CodeIgniter/index.php/Usuarios/login');
+	}
+
+	public function Cookie(){
+		$this->load->helper('cookie');
+
+        $name   = 'Auth_Token';
+        $value  = 'Token';
+        $expire = time()+1000;
+        $path  = '/';
+		$secure = TRUE;
+		setcookie($name,$value,$expire,$path); 
+		//echo get_cookie(index 'Token');
+        $this->load->view('welcome_message');
 	}
 
 
@@ -104,9 +140,7 @@ class Usuarios extends CI_Controller
 		$Telefono = $this->input->post('Telefono');
 		$Usuario = $this->input->post('Usuario');
 		$Correo = $this->input->post('Correo');
-		//$Contrasena = $this->encrypt->decode('Contrasena');
-		$Contrasena = $this->input->post('Contrasena');
-
+		$Contrasena = sha1($this->input->post('Contrasena'));
 
 		$Datos = array(
 			'Nombres' => $Nombres,
@@ -119,7 +153,7 @@ class Usuarios extends CI_Controller
 
 		$this->Usuarios_model->Agregar_Usuario($Datos);
 		$this->load->helper('url');
-		redirect('http://localhost/CodeIgniter/index.php/Usuarios/Listado');
+		redirect('http://192.168.50.27/CodeIgniter/index.php/Usuarios/Listado');
 	}
 
 	public function Modificar_Usuario()
@@ -163,7 +197,7 @@ class Usuarios extends CI_Controller
 		} else {
 			$this->Usuarios_model->Modificar_Usuario($Datos1, $Datos);
 			$this->load->helper('url');
-			redirect('http://localhost/CodeIgniter/index.php/Usuarios/Listado');
+			redirect('http://192.168.50.27/CodeIgniter/index.php/Usuarios/Listado');
 		}
 	}
 
@@ -195,7 +229,7 @@ class Usuarios extends CI_Controller
 		);
 		$this->Usuarios_model->Eliminar_Usuario($Datos1, $Datos);
 		$this->load->helper('url');
-		redirect('http://localhost/CodeIgniter/index.php/Usuarios/Listado');
+		redirect('http://192.168.50.27/CodeIgniter/index.php/Usuarios/Listado');
 	}
 
 	public function Listado()

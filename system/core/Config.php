@@ -76,7 +76,7 @@ class CI_Config {
 
 			else
 			{
-				$base_url = 'http://localhost/CodeIgniter';
+				$base_url = 'http://192.168.50.27/CodeIgniter';
 			}
 
 			$this->set_item('base_url', $base_url);
