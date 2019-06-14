@@ -1,23 +1,27 @@
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.1/cookieconsent.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<link rel="stylesheet" href="cookiealert.css">
-<script src="cookiealert-standalone.js"></script>
+<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.1/cookieconsent.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
+
+
 
 <?
 session_start();
 $token = $_POST['token'];
- 
-if($_SESSION['token'] == $token){
-    $nombre = $_POST['nombre'];
-    echo "Hola " . $nombre;
-}else{
-    echo "Has intentado acceder sin cumplir con el token";
+
+if ($_SESSION['token'] == $token) {
+  $nombre = $_POST['nombre'];
+  echo "Hola " . $nombre;
+} else {
+  echo "Has intentado acceder sin cumplir con el token";
 }
 ?>
-<?php 
+<?php
 if (!$this->session->userdata("login")) {
   redirect('http://192.168.50.27/CodeIgniter/index.php/Usuarios/login');
 }
@@ -25,12 +29,14 @@ if (!$this->session->userdata("login")) {
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <nav class="navbar navbar-dark navbar-expand-lg bg-primary">
-    <a class="navbar-brand" href="http://192.168.50.27/CodeIgniter/index.php/Usuarios/login">Formulario</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+      <a class="navbar-brand" href="http://192.168.50.27/CodeIgniter/index.php/Usuarios/login">Formulario</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item active">
@@ -42,21 +48,23 @@ if (!$this->session->userdata("login")) {
         <li class="nav-item">
           <a class="nav-link" href="http://192.168.50.27/CodeIgniter/index.php/Usuarios/Listado">Listado</a>
         </li>
-
       </ul>
 
     </div>
     <form id="Form2" action="logout" class="form-inline my-2 my-lg-0">
-            <button class="btn btn-secondary my-2 my-sm-0" onClick="Cerrar()" type="button" >Cerrar sesión</button>
-          </form>
+      <button class="btn btn-secondary my-2 my-sm-0" onClick="Cerrar()" type="button">Cerrar sesión</button>
+    </form>
   </nav>
   <title>Formulario</title>
 </head>
-<?php 
-echo "Tu dirección IP es: {$_SERVER['REMOTE_ADDR']}";
-?>
+
 <body>
-  <div class="container">
+  <div class="container login-container animated fadeInLeft">
+  <h4 style="text-align:center" >
+   <?php echo ('Bienvenido ');?>
+   <?php print_r($this->session->userdata('Nombres'))   ?>
+   
+  </h4>
     <h4 style="text-align: center"> Añadir usuario</h4>
     <form action="Guardar_Usuario" method="POST" enctype="multipart/form-data">
       <p class="p-title-0">Nombres:</p>
@@ -80,7 +88,7 @@ echo "Tu dirección IP es: {$_SERVER['REMOTE_ADDR']}";
 
       <div>
       </div>
-      
+
       <center>
         <button class=" btn btn-lg btn btn-success" type="submit">Confirmar</button>
       </center>
@@ -90,45 +98,52 @@ echo "Tu dirección IP es: {$_SERVER['REMOTE_ADDR']}";
 </body>
 
 </html>
-<div class="alert alert-dismissible text-center cookiealert" role="alert">
 
-  <div class="cookiealert-container">
-
-      <b>Do you like cookies?</b> &#x1F36A; We use cookies to ensure you get the best experience on our website. <a href="http://cookiesandyou.com/" target="_blank">Learn more</a>
-
- 
-
-      <button type="button" class="btn btn-primary btn-sm acceptcookies" aria-label="Close">
-
-          I agree
-
-      </button>
-
-  </div>
-
-</div>
-
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
+<script>
+  window.addEventListener("load", function() {
+    window.cookieconsent.initialise({
+      "palette": {
+        "popup": {
+          "background": "#edeff5",
+          "text": "#838391"
+        },
+        "button": {
+          "background": "#4b81e8"
+        }
+      },
+      "theme": "classic",
+      "content": {
+        "message": "Este sitio web utiliza cookies para mejorar su experiencia en el sitio web.",
+        "dismiss": "Entendido",
+        "link": "Leer más",
+        "href": "#"
+      }
+    })
+  });
+</script>
 
 <script type="text/javascript">
-      function Cerrar() {
-        swal({
-            title: "¿Esta seguro?",
-            text: "Recuerde memorizar su contraseña",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-          })
-          .then((willDelete) => {
-            if (willDelete) {
-              swal("Hasta pronto", {
-                icon: "success",
-              }).then(function() {
-                $("#Form2").submit();
-              });
-            } else {
-              swal("Se ha cancelado la operacion");
-
-            }
+  function Cerrar() {
+    swal({
+        title: "¿Esta seguro?",
+        text: "Recuerde memorizar su contraseña",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+          swal("Hasta pronto", {
+            icon: "success",
+          }).then(function() {
+            $("#Form2").submit();
           });
-      }
-    </script>
+        } else {
+          swal("Se ha cancelado la operacion");
+
+        }
+      });
+  }
+</script>

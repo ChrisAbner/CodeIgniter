@@ -33,7 +33,7 @@ class Usuarios extends CI_Controller
 			$this->load->view("login");
 		}
 	}
-	
+
 	public function Editar()
 	{
 		$this->load->view('Editar');
@@ -48,8 +48,6 @@ class Usuarios extends CI_Controller
 	{
 		$this->load->view('login');
 		$this->load->model('Usuarios_model');
-		
-
 		$username = $this->input->post("Usuario");
 		$password = $this->input->post("Contrasena");
 		$res = $this->Usuarios_model->login($username, sha1($password));
@@ -67,34 +65,25 @@ class Usuarios extends CI_Controller
 			$hora = date('H:i');
 			$session_id = session_id();
 			$Token = hash('sha1', $hora . $session_id);
-
 			$_SESSION['Token'] = $Token;
 			$Usuario = $this->input->post('Usuario');
 			$Token = $this->input->post('Token');
+			$_SESSION['Token'] = $_POST['Token'];
 			//$Token = $this->input->post($_SESSION['Token']);
-
-			$this->load->helper('cookie');
-
-        $name   = 'Auth_Token';
-        $value  = $Token;
-        $expire = time()+1000;
-        $path  = '/';
-		$secure = TRUE;
-		setcookie($name,$value,$expire,$path); 
-
-	
-
-$_SESSION['ip'] = $_SERVER['REMOTE_ADDR'];
-
-$_SESSION['Usuario'] = $_POST['Usuario'];
-
-$_SESSION['ip'] = sha1(time() . rand() . $_SERVER['SERVER_NAME']);
-setcookie('token', $_SESSION['ip']);
-
-
-
-		echo get_cookie($Token);
-		 
+			/////////////////////////////////////////////////////////////////
+			$name   = 'Auth_Token';
+			$value  = $Token;
+			$expire = time() + 1000;
+			$path  = '/';
+			$secure = TRUE;
+			setcookie($name, $value, $expire, $path);
+			/////////////////////////////////////////////////////////////////
+			$_SESSION['ip'] = $_SERVER['REMOTE_ADDR'];
+			$_SESSION['Usuario'] = $_POST['Usuario'];
+			$_SESSION['ip'] = sha1(time() . rand() . $_SERVER['SERVER_NAME']);
+			setcookie('Ip', $_SESSION['ip']);
+			/////////////////////////////////////////////////////////////////
+			
 			$Datos = array(
 				'Token' => $Token,
 			);
@@ -103,7 +92,10 @@ setcookie('token', $_SESSION['ip']);
 
 				//'Token' => $Token,
 			);
-
+			
+			$this->load->helpers('site',$_SESSION['Token']);
+			//	$this->load->helpers('site');
+			$this->load->helper('cookie');
 			$this->Usuarios_model->Token($Datos, $where);
 			redirect('http://192.168.50.27/CodeIgniter/index.php/Usuarios/Direccion');
 		}
@@ -114,21 +106,6 @@ setcookie('token', $_SESSION['ip']);
 		$this->session->sess_destroy();
 		redirect('http://192.168.50.27/CodeIgniter/index.php/Usuarios/login');
 	}
-
-	public function Cookie(){
-		$this->load->helper('cookie');
-
-        $name   = 'Auth_Token';
-        $value  = 'Token';
-        $expire = time()+1000;
-        $path  = '/';
-		$secure = TRUE;
-		setcookie($name,$value,$expire,$path); 
-		//echo get_cookie(index 'Token');
-        $this->load->view('welcome_message');
-	}
-
-
 
 
 	public function Guardar_Usuario()

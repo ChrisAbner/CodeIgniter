@@ -10,18 +10,20 @@ class Usuarios_model extends CI_Model
         // $this->load->model('Usuarios_Model');
     }
 
-    public function login($username, $password){
-		$this->db->where("Usuario", $username);
-		$this->db->where("Contrasena", $password);
+    public function login($username, $password)
+    {
+        $this->db->where("Usuario", $username);
+        $this->db->where("Contrasena", $password);
 
-		$resultados = $this->db->get("usuarios");
-		if ($resultados->num_rows() > 0) {
-			return $resultados->row();
-		}
-		else{
-			return false;
-		}
-	}
+        $resultados = $this->db->get("usuarios");
+        if ($resultados->num_rows() > 0) {
+            return $resultados->row();
+            //$this->load->helpers('site', $username);
+
+        } else {
+            return false;
+        }
+    }
 
     public function Agregar_Usuario($Datos)
     {
@@ -30,12 +32,11 @@ class Usuarios_model extends CI_Model
 
     public function Token($Datos, $where)
     {
-        print_r($Datos);
-        print_R($where);
+      
         //$this->db->update('usuarios',$Datos, "Usuario =". $where['Usuario']);
         //$this->db->update('usuarios', $Datos, array('Id' => $Datos1["Id"]));
         $this->db->update('usuarios', $Datos, array('Usuario' => $where["Usuario"]));
-        
+
         return true;
     }
 
@@ -49,8 +50,8 @@ class Usuarios_model extends CI_Model
     {
         $this->db->delete('usuarios',  array('Id' => $Datos1["Id"]));
         //$this->db->where(array('Id'=>$Datos1["Id"]));
-        return true;
-        
+        print_r($Datos1["Id"]);
+        return false;
     }
 
     public function Listado()
@@ -74,5 +75,4 @@ class Usuarios_model extends CI_Model
         }
         return $Filtrar->result_array();
     }
-
 }
