@@ -18,27 +18,17 @@ $_SESSION['Token'] = $Token;
 <html>
 <head>
   <nav class="navbar navbar-dark navbar-expand-lg bg-primary">
-    <a class="navbar-brand" href="http://192.168.50.27/CodeIgniter/index.php/Usuarios/login">Formulario</a>
+   
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item ">
-          <a class="nav-link" href="http://192.168.50.27/CodeIgniter/index.php/Usuarios/Direccion" hidden>Agregar <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item ">
-          <a class="nav-link" href="http://192.168.50.27/CodeIgniter/index.php/Usuarios/Editar" hidden>Editar</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="http://192.168.50.27/CodeIgniter/index.php/Usuarios/Listado" hidden>Listado</a>
-        </li>
-
-      </ul>
+  
     </div>
   </nav>
   <title>Formulario</title>
 </head>
+
 <h4 style="text-align: center"> Iniciar sesión</h4>
 <div class="container login-container animated fadeInLeft">
             <div class="row">

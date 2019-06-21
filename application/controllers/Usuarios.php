@@ -21,8 +21,6 @@ class Usuarios extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-
-
 		$this->load->model("Usuarios_model");
 	}
 	public function index()
@@ -38,6 +36,11 @@ class Usuarios extends CI_Controller
 	{
 		$this->load->view('Editar');
 		if ($this->input->get('Editar')) { }
+	}
+	public function Header()
+	{
+		$this->load->view('Header');
+		if ($this->input->get('Header')) { }
 	}
 	public function Direccion()
 	{
@@ -83,7 +86,6 @@ class Usuarios extends CI_Controller
 			$_SESSION['ip'] = sha1(time() . rand() . $_SERVER['SERVER_NAME']);
 			setcookie('Ip', $_SESSION['ip']);
 			/////////////////////////////////////////////////////////////////
-			
 			$Datos = array(
 				'Token' => $Token,
 			);
@@ -93,13 +95,14 @@ class Usuarios extends CI_Controller
 				//'Token' => $Token,
 			);
 			
-			$this->load->helpers('site',$_SESSION['Token']);
+			$this->load->helpers('site',$_POST['Usuario'],$_POST['Token'],$_SESSION['ip']);
 			//	$this->load->helpers('site');
 			$this->load->helper('cookie');
 			$this->Usuarios_model->Token($Datos, $where);
 			redirect('http://192.168.50.27/CodeIgniter/index.php/Usuarios/Direccion');
 		}
 	}
+	
 
 	public function logout()
 	{
